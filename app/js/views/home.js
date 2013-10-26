@@ -16,6 +16,7 @@ define(['backbone', 'models/game', 'tpl!templates/home.tpl'], function(Backbone,
     },
 
     startGame: function() {
+      console.log("asdf")
       var game = new Game();
       Crafty.init(game.get('width'), game.get('height'));
       Crafty.background(game.get('bg'));
