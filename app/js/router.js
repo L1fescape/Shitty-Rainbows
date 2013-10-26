@@ -1,39 +1,57 @@
-define(['backbone', 'views/header', 'views/home', 'game/scenes'],
-function(Backbone, HeaderView, HomeView) {
+define(['backbone', 'views/header', 'views/game', 'models/game', 'scenes/loading', 'levelController'],
+function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
     return Backbone.Router.extend({
+        loaded: false,
+
         routes: {
-            '' : 'home',
-            'level1' : 'level1'
+            '' : 'loading',
+            'level/' : 'level',
+            'level/:levelNumber' : 'level'
         },
 
         initialize: function() {
             // init the header and the footer
             BGJ.vPgHeader = new HeaderView();
+            BGJ.GameModel = new GameModel();
+            BGJ.GameView = new GameView({model: BGJ.GameModel});
 
-            BGJ.dispatcher.on("game:start", this.routeToGame, this);
+            BGJ.dispatcher.on("game:loaded", this.loadingDone, this);
+            BGJ.dispatcher.on("game:start", this.routeToLevel, this);
         },
 
-        home: function() {
-            // show the header
-            BGJ.vPgHeader.trigger("show");
-            // tell the previous view to close itself
-            BGJ.dispatcher.trigger("views:closePage");
-
-            BGJ.vPgHome = new HomeView();
+        loading: function(levelStart) {
+            // add ability to load the game and start from a given level
+            if (levelStart)
+                new loading(levelStart);
+            else
+                new loading();
         },
 
-        level1: function() {
-            Crafty.scene('Loading');
+        level: function(levelNumber) {
+            if (!this.loaded) {
+                this.loading(levelNumber);
+            }
+            else if (!levelNumber) {
+                this.routeToLevel(1);
+            }
+            else {
+                new levelController(levelNumber);
+            }
         },
 
-        routeToHome: function() {
+        loadingDone: function() {
+            this.loaded = true;
+        },
+
+        routeToLoading: function() {
             BGJ.router.navigate('#/', {
                 trigger: true
             });
         },
 
-        routeToGame: function() {
-            BGJ.router.navigate('#/level1', {
+        routeToLevel: function(level) {
+            level = level || "";
+            BGJ.router.navigate('#/level/'+level, {
                 trigger: true
             });
         }

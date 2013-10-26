@@ -1,9 +1,24 @@
 {
-  "name": "Shitty Rainbows",
-  "version": "0.0.1",
-  "dependencies": {
+  "name": "baconjam",
+  "version": "0.0.0",
+  "description": "Shitty-Rainbows ===============",
+  "main": "build.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "requirejs": "~2.1.8"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/L1fescape/Shitty-Rainbows.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "1b34e1f6a398bc348801628ddc5f1938f8f3bbf5",
+  "bugs": {
+    "url": "https://github.com/L1fescape/Shitty-Rainbows/issues"
+  },
+  "dependencies": {
+    "express": "~3.4.3",
+    "requirejs": "~2.1.9"
   }
 }

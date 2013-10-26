@@ -1,4 +1,4 @@
-define(['crafty', 'game/components'], function(Crafty) {
+define(['crafty'], function(Crafty) {
 
     Crafty.c('Actor', {
         init: function() {
