@@ -1,3 +1,6 @@
 <div class="body-wrapper">
-Tits
+	<h2>Tits indeed</h2>
+	<div id="cr-stage">
+
+	</div>
 </div>
