@@ -12,6 +12,9 @@ require.config({
       ],
       exports: 'Backbone'
     },
+    crafty: {
+      exports: 'Crafty'
+    },
   },
   paths: {
     templates: '../templates',
@@ -23,12 +26,13 @@ require.config({
   }
 });
 
-require(['backbone', 'router'], function (Backbone, Router) {
+require(['backbone', 'crafty', 'router'], function (Backbone, Crafty, Router) {
   $(document).ready(function() {
 
     // create namespaces
     window.BGJ = window.BGJ || {};
     BGJ.dispatcher = BGJ.dispatcher || {};
+    window.Crafty = window.Crafty || Crafty;
 
     // create a global dispatcher of events
     _.extend(BGJ.dispatcher, Backbone.Events);
