@@ -26,7 +26,7 @@ require.config({
   }
 });
 
-require(['backbone', 'crafty', 'router'], function (Backbone, Crafty, Router) {
+require(['backbone', 'crafty', 'jquery', 'router'], function (Backbone, Crafty, $, Router) {
   $(document).ready(function() {
 
     // create namespaces
@@ -40,5 +40,14 @@ require(['backbone', 'crafty', 'router'], function (Backbone, Crafty, Router) {
     // create the main app router
     BGJ.router = new Router();
     Backbone.history.start();
+
+    //todo: needs to be moved into an init function for something. Should be an extension of Crafty but maybe the router?
+    $(window).keypress(function(ev){
+      ev.preventDefault();
+    });
+
+    $(window).keydown(function(ev){
+      ev.preventDefault();
+    });
   });
 });
