@@ -1,5 +1,7 @@
 define(function() {
-    return function() {
-        Crafty.e('Actor');
-    }
+    return Backbone.View.extend({
+        initialize: function() {
+            Crafty.e('Actor');
+        }
+    });
 });

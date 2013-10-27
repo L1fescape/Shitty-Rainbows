@@ -1,9 +1,8 @@
-define(['models/level'], function(LevelModel) {
+define(['models/level', 'scenes/level1'], function(LevelModel, Scene) {
     return function(levelNumber) {
-        new LevelModel({levelNumber: levelNumber});
+        var level = new LevelModel({levelNumber: levelNumber});
         if (levelNumber == 1) {
-            Crafty.e('Actor');
-            Crafty.e('Poop');
+            new Scene({model: level});
         }
         else if (levelNumber == 2) {
             Crafty.e('Poop');

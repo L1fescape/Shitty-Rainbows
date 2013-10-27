@@ -31,7 +31,7 @@ function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
             if (!this.loaded) {
                 this.loading(levelNumber);
             }
-            else if (!levelNumber) {
+            else if (!levelNumber || levelNumber > 20) {
                 this.routeToLevel(1);
             }
             else {
