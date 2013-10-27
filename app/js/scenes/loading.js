@@ -1,6 +1,7 @@
-define(['crafty', 'components'], function(Crafty) {
+define(['crafty', 'components'], function(Crafty, Components) {
 return function(levelStart) {
     levelStart = levelStart || null;
+    new Components();
     Crafty.load([
         'assets/img/example.png',
         'assets/img/example2.png'
