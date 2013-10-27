@@ -2,8 +2,7 @@ define(['backbone'], function(Backbone) {
     return Backbone.View.extend({
         initialize: function() {
             Crafty.scene('Game', function() {
-                this.model.createPoops(15, 80, 5, 150);
-                this.model.createPoops(10, 100, 3, 300);
+                this.model.createPoops(15);
 
                 var planet = Crafty.e('Planet');
                 var turretHead = Crafty.e('Player');
