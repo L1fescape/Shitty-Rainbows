@@ -148,7 +148,7 @@ define(function() {
 
             init: function() {
                 this.requires('Actor, Color, Collision');
-                this.attr({z: 1, w: 16, h: 16});
+                this.attr({z: 4, w: 16, h: 16});
                 this.origin('center');
                 this.bind('EnterFrame', function() {
                     this.rotation += 5;
