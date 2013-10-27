@@ -87,33 +87,46 @@ define(function() {
             bulletRate: 40,
             lastTimeFired: 0,
             lastColor: 0,
+            movementSpeed: 5,
+            turretType: 1,
             colors: ['#ff0000', '#ff1500', '#ff00cc', '#ff00b7', '#8800ff', '#6600ff', '#0099ff', '#00ccff', '#00ff66', '#00ff00', '#e1ff00', '#ffff00', '#ffa200', 'f77f00'],
 
             init: function() {
                 this.requires('Actor, Image, Collision, Keyboard')
                     .attr({w: 52, h: 114, z: 5})
                     .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
-                    .image('assets/img/turret.png');
+                if (this.turretType == 1) {
+                    this.image('assets/img/turret.png');
+                }
+                else {
+                    this.image('assets/img/turret-head.png')
+                    this.origin('bottom center');
+                }
                 this.onHit('Poop', this.takeDamage);
                 this.bind('EnterFrame', function(ev){
+                    if (this.isDown('A') && this.rotation > -90) {
+                        this.rotation -= this.movementSpeed;
+                    }
+                    if (this.isDown('D') && this.rotation < 90) {
+                        this.rotation += this.movementSpeed;
+                    }
                     if (this.isDown('SPACE')) {
                         var curSeconds = Date.now();
                         if (curSeconds - this.lastTimeFired > this.bulletRate) {
                             this.lastTimeFired = curSeconds;
 
-                            var xplayer = this.x + this.w/2;
-                            var yplayer = this.y;
-                            var xmouse = Crafty('Crosshair').x;
-                            var ymouse = Crafty('Crosshair').y;
+                            this.rotation = this.rotation - 90;
 
-                            var angleRadian = Math.atan2(ymouse - yplayer, xmouse - xplayer);
+                            var angleRadian = this.rotation * (Math.PI/180);
 
                             var ydir = Math.sin(angleRadian);
                             var xdir = Math.cos(angleRadian);
 
-                            var rotation = angleRadian * 180 / Math.PI;
+                            var xpos = this.x + 20 + xdir*this.h;
+                            var ypos = this.y + this.w + ydir*this.w;
+
                             Crafty.e('Bullet')
-                                .attr({x : xplayer - 8, y : yplayer, xdir : xdir, ydir : ydir, rotation : rotation})
+                                .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : this.rotation})
                                 .color(this.colors[this.lastColor]);
 
                             this.lastColor++;
@@ -153,20 +166,7 @@ define(function() {
             init: function() {
                 this.requires('Actor, Color, Fourway, Collision, WiredHitBox')
                     .attr({x: Crafty('Player').x, y: 100, z: 3, w: 15, h: 15})
-                    .fourway(7)
                     .color('#ffc');
-                this.bind('Moved', function() {
-                    if (this.x > game.get('width') - this.w ||
-                        this.y > game.get('height') - this.h||
-                        this.x < 0 ||
-                        this.y < 0) {
-                        this._speed = 0;
-                        if (this._movement) {
-                            this.x -= this._movement.x;
-                            this.y -= this._movement.y;
-                        }
-                    }
-                })
             }
         });
 
