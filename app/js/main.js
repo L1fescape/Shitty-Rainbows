@@ -14,7 +14,7 @@ require.config({
     },
     crafty: {
       exports: 'Crafty'
-    },
+    }
   },
   paths: {
     templates: '../templates',
