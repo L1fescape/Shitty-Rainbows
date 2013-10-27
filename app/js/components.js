@@ -61,9 +61,6 @@ define(function() {
 
         Crafty.c('Player', {
 
-            w:  32,
-            h: 32,
-            z: 5,
             bullets: [],
             bulletRate: 5,
             lastTimeFired: 0,
@@ -72,8 +69,10 @@ define(function() {
 
             init: function() {
                 this.requires('Actor, Image, Collision, Keyboard')
-                    .attr({x: game.get('width')/2 - this.w/2, y: game.get('width')/2 - this.y/2, z: 5})
-                    .image('assets/img/example2.png');
+                    .attr({w: 56, h: 62, z: 5})
+                    .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
+                    .image('assets/img/turret-head.png');
+                this.origin('bottom center');
                 this.onHit('Poop', this.takeDamage);
                 this.bind('EnterFrame', function(ev){
                     if (this.isDown('SPACE')) {
@@ -92,8 +91,9 @@ define(function() {
                             var xdir = Math.cos(angleRadian);
 
                             var rotation = angleRadian * 180 / Math.PI;
+                            this.rotation = rotation + 90;
                             Crafty.e('Bullet')
-                                .attr({x : xplayer, y : yplayer, xdir : xdir, ydir : ydir, rotation : rotation})
+                                .attr({x : xplayer - this.w/4, y : yplayer, xdir : xdir, ydir : ydir, rotation : rotation})
                                 .color(this.colors[this.lastColor]);
 
                             this.lastColor++;
@@ -116,6 +116,7 @@ define(function() {
             init: function() {
                 this.requires('Actor, Color, Collision');
                 this.attr({z: 1, w: 16, h: 16});
+                this.origin('center');
                 this.bind('EnterFrame', function() {
                     this.x += this.xdir * this.bulletspeed;
                     this.y += this.ydir * this.bulletspeed;
@@ -130,7 +131,7 @@ define(function() {
         Crafty.c('Crosshair', {
             init: function() {
                 this.requires('Actor, Color, Fourway, Collision, WiredHitBox')
-                    .attr({x: 100, y: 100, z: 3, w: 15, h: 15})
+                    .attr({x: Crafty('Player').x, y: 100, z: 3, w: 15, h: 15})
                     .fourway(7)
                     .color('#ffc');
                 this.bind('Moved', function() {
