@@ -3,12 +3,13 @@ function(Backbone, HeaderView, HomeView) {
     return Backbone.Router.extend({
         routes: {
             '' : 'home',
-            'level1' : 'level1'
+            'level/:num' : 'loadLevel'
         },
 
         initialize: function() {
             // init the header and the footer
             BGJ.vPgHeader = new HeaderView();
+            BGJ.vPgHome = new HomeView();
 
             BGJ.dispatcher.on("game:start", this.routeToGame, this);
         },
@@ -22,7 +23,8 @@ function(Backbone, HeaderView, HomeView) {
             BGJ.vPgHome = new HomeView();
         },
 
-        level1: function() {
+        loadLevel: function(num) {
+            BGJ.currentLevel = num;
             Crafty.scene('Loading');
         },
 
@@ -33,7 +35,7 @@ function(Backbone, HeaderView, HomeView) {
         },
 
         routeToGame: function() {
-            BGJ.router.navigate('#/level1', {
+            BGJ.router.navigate('#/level/1', {
                 trigger: true
             });
         }

@@ -20,22 +20,22 @@ function(_, Crafty, Levels) {
     });
 
     Crafty.scene('Game', function() {
-        var lvl1 = new Levels.level1();
+        createPoops(15, 80, 5, 150);
+        createPoops(10, 100, 3, 300);
 
-        this.levelLoader = this.bind('EnterFrame', _.bind(function () {
-            //Need to compensate for window blurring.
-            var num = Math.floor(Date.now()/1000) - lvl1.get('start');
-            var marks = lvl1.get('secondMark');
-            if (marks[num]) {
-                marks[num]();
-                marks[num] = null;
-                lvl1.set('secondMark', marks);
-            }
-
-            if (num > lvl1.get('length')) {
-                this.unbind('EnterFrame', this.levelLoader);
-            }
-        }, this));
+        Crafty.e('Crosshair');
+        Crafty.e('Player');
 
     });
 });
+
+function createPoops(num, rate, speed, delay) {
+    var lastPoop = delay || 0;
+    for (var i = 0; i < num; i++) {
+        lastPoop += rate;
+        setTimeout(function() {
+            var poop = Crafty.e('Poop');
+            poop.movementSpeed = speed;
+        }, lastPoop);
+    }
+}
