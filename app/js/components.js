@@ -62,26 +62,25 @@ define(function() {
         Crafty.c('Player', {
 
             bullets: [],
-            bulletRate: 5,
+            bulletRate: 40,
             lastTimeFired: 0,
             lastColor: 0,
             colors: ['#ff0000', '#ff1500', '#ff00cc', '#ff00b7', '#8800ff', '#6600ff', '#0099ff', '#00ccff', '#00ff66', '#00ff00', '#e1ff00', '#ffff00', '#ffa200', 'f77f00'],
 
             init: function() {
                 this.requires('Actor, Image, Collision, Keyboard')
-                    .attr({w: 56, h: 62, z: 5})
+                    .attr({w: 52, h: 114, z: 5})
                     .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
-                    .image('assets/img/turret-head.png');
-                this.origin('bottom center');
+                    .image('assets/img/turret.png');
                 this.onHit('Poop', this.takeDamage);
                 this.bind('EnterFrame', function(ev){
                     if (this.isDown('SPACE')) {
-                        var curSeconds = (new Date).getTime();
+                        var curSeconds = Date.now();
                         if (curSeconds - this.lastTimeFired > this.bulletRate) {
                             this.lastTimeFired = curSeconds;
 
                             var xplayer = this.x + this.w/2;
-                            var yplayer = this.y + this.h/2;
+                            var yplayer = this.y;
                             var xmouse = Crafty('Crosshair').x;
                             var ymouse = Crafty('Crosshair').y;
 
@@ -91,9 +90,8 @@ define(function() {
                             var xdir = Math.cos(angleRadian);
 
                             var rotation = angleRadian * 180 / Math.PI;
-                            this.rotation = rotation + 90;
                             Crafty.e('Bullet')
-                                .attr({x : xplayer - this.w/4, y : yplayer, xdir : xdir, ydir : ydir, rotation : rotation})
+                                .attr({x : xplayer - 8, y : yplayer, xdir : xdir, ydir : ydir, rotation : rotation})
                                 .color(this.colors[this.lastColor]);
 
                             this.lastColor++;
@@ -118,6 +116,7 @@ define(function() {
                 this.attr({z: 1, w: 16, h: 16});
                 this.origin('center');
                 this.bind('EnterFrame', function() {
+                    this.rotation += 5;
                     this.x += this.xdir * this.bulletspeed;
                     this.y += this.ydir * this.bulletspeed;
 

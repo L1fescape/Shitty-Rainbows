@@ -9,6 +9,7 @@ return function(levelStart) {
         'assets/img/castle.png',
         'assets/img/turret-body.png',
         'assets/img/turret-head.png',
+        'assets/img/turret.png',
 
         'assets/img/monkeys.png',
         'assets/img/planet.png'
