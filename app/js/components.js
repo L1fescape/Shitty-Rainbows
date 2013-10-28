@@ -8,6 +8,20 @@ define(function() {
             }
         });
 
+        Crafty.c('Hover', {
+            lastAngle: 0,
+            increment: 2,
+            hoverRadius: .5,
+            init: function() {
+                this.bind('EnterFrame', this.hover)
+            },
+
+            hover: function() {
+                this.y += Math.cos(this.lastAngle * Math.PI / 180.0) * this.hoverRadius;
+                this.lastAngle += this.increment;
+            }
+        });
+
         Crafty.c('Poop', {
             w: 32,
             h: 32,
@@ -68,7 +82,7 @@ define(function() {
             colors: ['#ff0000', '#ff1500', '#ff00cc', '#ff00b7', '#8800ff', '#6600ff', '#0099ff', '#00ccff', '#00ff66', '#00ff00', '#e1ff00', '#ffff00', '#ffa200', 'f77f00'],
 
             init: function() {
-                this.requires('Actor, Image, Collision, Keyboard')
+                this.requires('Actor, Image, Collision, Keyboard, Hover')
                     .attr({w: 52, h: 114, z: 5})
                     .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
                     .image('assets/img/turret.png');
