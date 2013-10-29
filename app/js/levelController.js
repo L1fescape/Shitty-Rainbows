@@ -1,6 +1,11 @@
-define(['models/level', 'scenes/levels'], function(LevelModel, LevelScene) {
+define(['models/level', 'scenes/level1', 'scenes/level2'], function(LevelModel, Level1, Level2) {
     return function(levelNumber) {
-        var model = new LevelModel({levelNumber: levelNumber});
-        var scene = new LevelScene({model: model});
+        var level = new LevelModel({levelNumber: levelNumber});
+        if (levelNumber == 1) {
+            new Level1({model: level});
+        }
+        else if (levelNumber == 2) {
+            new Level2({model: level});
+        }
     }
 });

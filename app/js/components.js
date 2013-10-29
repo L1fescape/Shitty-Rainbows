@@ -42,9 +42,14 @@ define(function() {
                 this.angle = -(Math.random()*180);
 
                 this.bind('EnterFrame', this.fall);
-                this.onHit('Player', this.destroy);
-                this.onHit('Bullet', this.destroy);
-                this.onHit('Planet', this.destroy);
+                this.onHit('Player', this.killPoop);
+                this.onHit('Bullet', this.killPoop);
+                this.onHit('Planet', this.killPoop);
+            },
+
+            killPoop: function() {
+                Crafty.trigger('poop:kill');
+                this.destroy();
             },
 
             fall: function() {

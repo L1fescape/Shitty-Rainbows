@@ -17,6 +17,7 @@ function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
 
             BGJ.dispatcher.on("game:loaded", this.loadDone, this);
             BGJ.dispatcher.on("game:start", this.routeToLevel, this);
+            BGJ.dispatcher.on("level:complete", this.routeToLevel, this);
         },
 
         loadLevel: function(levelStart) {
