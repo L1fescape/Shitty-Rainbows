@@ -10,15 +10,15 @@ define(function() {
 
         Crafty.c('Hover', {
             lastAngle: 0,
-            increment: 2,
-            hoverRadius: .5,
+            hoverIncrement: 2,
+            hoverRadius: .4,
             init: function() {
                 this.bind('EnterFrame', this.hover)
             },
 
             hover: function() {
                 this.y += Math.cos(this.lastAngle * Math.PI / 180.0) * this.hoverRadius;
-                this.lastAngle += this.increment;
+                this.lastAngle += this.hoverIncrement;
             }
         });
 
@@ -108,6 +108,8 @@ define(function() {
                     .attr({w: 52, h: 114, z: 5})
                     .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
                     .image('assets/img/turret.png');
+                this.hoverIncrement = 1.9;
+                this.hoverRadius = .4;
                 this.onHit('Poop', this.takeDamage);
                 this.bind('EnterFrame', function(ev){
                     if (this.isDown('SPACE')) {
