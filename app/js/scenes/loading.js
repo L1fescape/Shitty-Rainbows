@@ -3,8 +3,10 @@ return function(levelStart) {
     levelStart = levelStart || null;
     new Components();
     Crafty.load([
-        'assets/img/example.png',
-        'assets/img/example2.png',
+        'assets/img/poop-1.png',
+        'assets/img/poop-2.png',
+        'assets/img/poop-3.png',
+        'assets/img/poop-4.png',
 
         'assets/img/castle.png',
         'assets/img/turret-body.png',

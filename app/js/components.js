@@ -18,7 +18,26 @@ define(function() {
                     x: Math.random()*game.get('width'),
                     y: -(Math.random()*game.get('height')/10)
                 });
-                this.image('assets/img/example.png');
+
+                var image;
+
+                switch (Math.ceil(Math.random()*4)) {
+                    case 1:
+                        image = 'assets/img/poop-1.png';
+                        break;
+                    case 2:
+                        image = 'assets/img/poop-2.png';
+                        break;
+                    case 3:
+                        image = 'assets/img/poop-3.png';
+                        break;
+                    case 4:
+                        image = 'assets/img/poop-4.png';
+                        break;
+                    default:
+                }
+
+                this.image(image);
 
                 this.angle = -(Math.random()*180);
 
@@ -46,11 +65,14 @@ define(function() {
 
                 var angleRadian = Math.atan2(targetY - thisY, targetX - thisX);
 
+                var rotation = angleRadian * 180 / Math.PI;
+
                 var ydir = Math.sin(angleRadian);
                 var xdir = Math.cos(angleRadian);
 
                 this.x += xdir * this.movementSpeed;
                 this.y += ydir * this.movementSpeed;
+                this.rotation = rotation - 90;
 
                 if (this.y >= targetY) {
                     this.destroy();

@@ -14,7 +14,7 @@ define(['jquery', 'backbone'], function($, Backbone) {
         defaults: {
             width: 700,
             height: 500,
-            bg: '#555'
+            bg: 'url("assets/img/starfield.png")'
         }
-    });
+});
 });
