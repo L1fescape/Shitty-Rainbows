@@ -20,7 +20,7 @@ function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
             BGJ.dispatcher.on("level:complete", this.routeToLevel, this);
         },
 
-        loadLevel: function(levelStart) {
+        loading: function(levelStart) {
             // add ability to load the game and start from a given level
             if (levelStart) {
                 new loading(levelStart);
@@ -35,7 +35,7 @@ function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
 
         goToLevel: function(levelNumber) {
             if (!this.loaded) {
-                this.loadLevel(levelNumber);
+                this.loading(levelNumber);
             } else if (!levelNumber || levelNumber > 20) {
                 this.routeToLevel(1);
             } else {

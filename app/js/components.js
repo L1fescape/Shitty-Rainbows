@@ -86,43 +86,37 @@ define(function() {
             }
         });
 
-        Crafty.c('Player', {
+        Crafty.c('Turret1', {
 
             bullets: [],
-            bulletRate: 40,
+            bulletRate: 100,
             lastTimeFired: 0,
             lastColor: 0,
             movementSpeed: 5,
-            turretType: 1,
+            turretRotate: 0,
             colors: ['#ff0000', '#ff1500', '#ff00cc', '#ff00b7', '#8800ff', '#6600ff', '#0099ff', '#00ccff', '#00ff66', '#00ff00', '#e1ff00', '#ffff00', '#ffa200', 'f77f00'],
 
             init: function() {
                 this.requires('Actor, Image, Collision, Keyboard')
                     .attr({w: 52, h: 114, z: 5})
                     .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
-                if (this.turretType == 1) {
-                    this.image('assets/img/turret.png');
-                }
-                else {
-                    this.image('assets/img/turret-head.png')
-                    this.origin('bottom center');
-                }
+                this.image('assets/img/turret-head.png')
+                this.origin('bottom center');
                 this.onHit('Poop', this.takeDamage);
                 this.bind('EnterFrame', function(ev){
-                    if (this.isDown('A') && this.rotation > -90) {
-                        this.rotation -= this.movementSpeed;
+                    if (this.isDown('A') && this.turretRotate > -90 ) {
+                        this.turretRotate -= this.movementSpeed;
                     }
-                    if (this.isDown('D') && this.rotation < 90) {
-                        this.rotation += this.movementSpeed;
+                    if (this.isDown('D') && this.turretRotate < 90) {
+                        this.turretRotate += this.movementSpeed;
                     }
+                    this.rotation = this.turretRotate;
                     if (this.isDown('SPACE')) {
                         var curSeconds = Date.now();
                         if (curSeconds - this.lastTimeFired > this.bulletRate) {
-                            this.lastTimeFired = curSeconds;
 
-                            this.rotation = this.rotation - 90;
-
-                            var angleRadian = this.rotation * (Math.PI/180);
+                            var rotation = this.turretRotate - 90;
+                            var angleRadian = rotation * (Math.PI/180);
 
                             var ydir = Math.sin(angleRadian);
                             var xdir = Math.cos(angleRadian);
@@ -131,7 +125,62 @@ define(function() {
                             var ypos = this.y + this.w + ydir*this.w;
 
                             Crafty.e('Bullet')
-                                .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : this.rotation})
+                                .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
+                                .color(this.colors[this.lastColor]);
+
+                            this.lastColor++;
+                            if (this.lastColor === this.colors.length - 1) {
+                                this.lastColor = 0;
+                            }
+                        }
+                    }
+                });
+            },
+
+            takeDamage: function(ev) {
+                console.log(ev);
+            }
+        });
+
+        Crafty.c('Turret2', {
+
+            bullets: [],
+            bulletRate: 40,
+            lastTimeFired: 0,
+            lastColor: 0,
+            movementSpeed: 5,
+            turretType: 1,
+            turretRotate: 0,
+            colors: ['#ff0000', '#ff1500', '#ff00cc', '#ff00b7', '#8800ff', '#6600ff', '#0099ff', '#00ccff', '#00ff66', '#00ff00', '#e1ff00', '#ffff00', '#ffa200', 'f77f00'],
+
+            init: function() {
+                this.requires('Actor, Image, Collision, Keyboard')
+                    .attr({w: 52, h: 114, z: 5})
+                    .attr({x: Crafty('Planet').x + Crafty('Planet').w/2 - this.w/2, y: Crafty('Planet').y - this.y/2})
+                this.image('assets/img/turret.png');
+                this.onHit('Poop', this.takeDamage);
+                this.bind('EnterFrame', function(ev){
+                    if (this.isDown('A') && this.turretRotate > -90 ) {
+                        this.turretRotate -= this.movementSpeed;
+                    }
+                    if (this.isDown('D') && this.turretRotate < 90) {
+                        this.turretRotate += this.movementSpeed;
+                    }
+                    if (this.isDown('SPACE')) {
+                        var curSeconds = Date.now();
+                        if (curSeconds - this.lastTimeFired > this.bulletRate) {
+
+                            var rotation = this.turretRotate - 90;
+                            var angleRadian = rotation * (Math.PI/180);
+
+                            var ydir = Math.sin(angleRadian);
+                            var xdir = Math.cos(angleRadian);
+
+                            var xpos = this.x + 20;
+                            var ypos = this.y + 5;
+
+                            Crafty.e('Bullet')
+                                .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
                                 .color(this.colors[this.lastColor]);
 
                             this.lastColor++;
