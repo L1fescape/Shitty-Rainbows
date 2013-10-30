@@ -16,5 +16,5 @@ define(['jquery', 'backbone'], function($, Backbone) {
             height: 500,
             bg: 'url("assets/img/starfield.png")'
         }
-});
+    });
 });

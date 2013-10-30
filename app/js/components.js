@@ -42,7 +42,8 @@ define(function() {
                 this.angle = -(Math.random()*180);
 
                 this.bind('EnterFrame', this.fall);
-                this.onHit('Player', this.killPoop);
+                this.onHit('Turret1', this.killPoop);
+                this.onHit('Turret2', this.killPoop);
                 this.onHit('Bullet', this.killPoop);
                 this.onHit('Planet', this.killPoop);
             },
@@ -209,7 +210,7 @@ define(function() {
                     this.x += this.xdir * this.bulletspeed;
                     this.y += this.ydir * this.bulletspeed;
 
-                    if (this.y < 0) {
+                    if (this.y+this.h < 0 || this.x+this.w < 0 || this.x > this.w + game.get('width')) {
                         this.destroy();
                     }
                 });
