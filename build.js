@@ -16,6 +16,7 @@
     jquery: '../libs/jquery.min',
     backbone: '../libs/backbone-min',
     underscore: '../libs/underscore-min',
+    crafty: '../libs/crafty-min',
     tpl: '../libs/requirejs-tpl'
   },
   shim: {
@@ -28,6 +29,9 @@
         'jquery'
       ],
       exports: 'Backbone'
+    },
+    crafty: {
+      exports: 'Crafty'
     }
   },
   modules: [{
