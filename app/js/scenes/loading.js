@@ -2,7 +2,6 @@ define(['crafty', 'components'], function(Crafty, Components) {
     return function(levelStart) {
         levelStart = levelStart || null;
 
-        new Components();
 
         Crafty.load([
             'assets/img/poop-1.png',
@@ -18,6 +17,7 @@ define(['crafty', 'components'], function(Crafty, Components) {
             'assets/img/monkeys.png',
             'assets/img/planet.png'
         ], function() {
+            new Components();
             BGJ.dispatcher.trigger('game:loaded');
             BGJ.dispatcher.trigger('game:start', levelStart);
         }, function(e) {

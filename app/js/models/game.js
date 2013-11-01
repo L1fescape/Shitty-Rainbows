@@ -1,11 +1,11 @@
 define(['jquery', 'backbone'], function($, Backbone) {
     $(window).bind({
         keypress: function(e) {
-            if ([37,38,39,40].indexOf(e.which) > -1)
+            if ([32,37,38,39,40].indexOf(e.which) > -1)
                 e.preventDefault();
         },
         keydown: function(e) {
-            if ([37,38,39,40].indexOf(e.which) > -1)
+            if ([32,37,38,39,40].indexOf(e.which) > -1)
                 e.preventDefault();
         }
     });

@@ -21,7 +21,7 @@ define(['backbone'], function(Backbone) {
             poops -= 1;
             this.model.set('poops', poops);
             if (poops <= 0 && this.model.madeAllPoops)
-                this.levelComplete();
+                console.log("faggot") //this.levelComplete();
         },
 
         levelComplete: function() {

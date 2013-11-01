@@ -89,8 +89,9 @@ define(function() {
 
         Crafty.c('Turret1', {
 
-            bullets: [],
-            bulletRate: 100,
+            bulletRate: 10,
+            bulletBurst: 1,
+            spread: 0.2,
             lastTimeFired: 0,
             lastColor: 0,
             movementSpeed: 5,
@@ -115,20 +116,8 @@ define(function() {
                     if (this.isDown('SPACE')) {
                         var curSeconds = Date.now();
                         if (curSeconds - this.lastTimeFired > this.bulletRate) {
-
-                            var rotation = this.turretRotate - 90;
-                            var angleRadian = rotation * (Math.PI/180);
-
-                            var ydir = Math.sin(angleRadian);
-                            var xdir = Math.cos(angleRadian);
-
-                            var xpos = this.x + 20 + xdir*this.h;
-                            var ypos = this.y + this.w + ydir*this.w;
-
-                            Crafty.e('Bullet')
-                                .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
-                                .color(this.colors[this.lastColor]);
-
+                            this.fire();
+                            this.lastTimeFired = curSeconds;
                             this.lastColor++;
                             if (this.lastColor === this.colors.length - 1) {
                                 this.lastColor = 0;
@@ -137,6 +126,28 @@ define(function() {
                     }
                 });
             },
+
+            fire: function() {
+                var rotation = this.turretRotate - 90;
+                var angleRadian = rotation * (Math.PI/180);
+
+                var ydir = Math.sin(angleRadian);
+                var xdir = Math.cos(angleRadian);
+
+                var xpos = this.x + 20 + xdir*this.h;
+                var ypos = this.y + this.w + ydir*this.w;
+                var spread = this.spread;
+
+                for (var i = 0, j = this.bulletBurst; i < j; i++) {
+                  angleRadian = (rotation) * (Math.PI/180) - parseInt(j/2)*spread +i*spread;
+                  ydir = Math.sin(angleRadian);
+                  xdir = Math.cos(angleRadian);
+                  Crafty.e('Bullet')
+                      .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
+                      .color(this.colors[this.lastColor]);
+                }
+            },
+
 
             takeDamage: function(ev) {
                 console.log(ev);
