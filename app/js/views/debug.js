@@ -24,12 +24,12 @@ define(['backbone', 'tpl!templates/debug.tpl'], function(Backbone, tpl) {
       }.bind(this), 500);
       // bind poops
       this.updatePoops();
-      Crafty.bind('poop:create', function() { this.poops++; this.updatePoops();}.bind(this));
-      Crafty.bind('poop:kill', function() { this.poops--; this.updatePoops();}.bind(this));
+      BGJ.dispatcher.on('poop:create', function() { this.poops++; this.updatePoops();}.bind(this));
+      BGJ.dispatcher.on('poop:kill', function() { this.poops--; this.updatePoops();}.bind(this));
       // bind bullets
       this.updateBullets();
-      Crafty.bind('bullet:create', function() { this.bullets++; this.updateBullets();}.bind(this));
-      Crafty.bind('bullet:kill', function() { this.bullets--; this.updateBullets();}.bind(this));
+      BGJ.dispatcher.on('bullet:create', function() { this.bullets++; this.updateBullets();}.bind(this));
+      BGJ.dispatcher.on('bullet:kill', function() { this.bullets--; this.updateBullets();}.bind(this));
     },
 
     // counts
