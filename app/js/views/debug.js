@@ -43,7 +43,7 @@ define(['backbone', 'tpl!templates/debug.tpl'], function(Backbone, tpl) {
     },
 
     resetCounts: function() {
-      this.poops = 0;
+      this.poops = Crafty('Poop').length;
       this.updatePoops();
       this.updateBullets();
     },
@@ -70,12 +70,15 @@ define(['backbone', 'tpl!templates/debug.tpl'], function(Backbone, tpl) {
     bindKeys: function() {
         $(window).bind({
             keypress: function(e) {
-                if (e.which == 49)
+                var key = String.fromCharCode(e.which);
+                if (key == "1")
                     BGJ.dispatcher.trigger('level:complete', 1);
-                if (e.which == 50)
+                if (key == "2")
                     BGJ.dispatcher.trigger('level:complete', 2);
-                if (e.which == 51)
+                if (key == "3")
                     BGJ.dispatcher.trigger('level:complete', 3);
+                if (key == "p")
+                    Crafty.pause();
             },
         });
     },
