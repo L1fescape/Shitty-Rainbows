@@ -252,5 +252,20 @@ define(function() {
             }
 
         });
+        
+        Crafty.c('Monkeys', {
+            init: function() {
+                setInterval(_.bind(function(){
+                    if (this.__image === 'assets/img/monkeys3.png') {
+                        this.image('assets/img/monkeys.png');
+                    } else if (this.__image === 'assets/img/monkeys.png') {
+                        this.image('assets/img/monkeys2.png');
+                    } else if (this.__image === 'assets/img/monkeys2.png') {
+                        this.image('assets/img/monkeys3.png');
+                    }
+                }, this), 300);
+            }
+
+        });
     }
 });
