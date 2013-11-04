@@ -2,6 +2,23 @@ define(function() {
     return function() {
         var game = BGJ.GameModel;
 
+        Crafty.sprite(64, 'assets/img/poop-splosion-64.png', {
+            splosion: [0,0]
+        });
+
+        Crafty.c('Splosion', {
+            init: function() {
+                this.requires('Actor, splosion, SpriteAnimation');
+                this.animate('Splode', 0, 0, 4);
+                this.animate('Splode', 15, 0);
+                this.bind('EnterFrame', function() {
+                    if (this._currentReelId !== 'Splode') {
+                        this.destroy();
+                    }
+                });
+            }
+        });
+
         Crafty.c('Actor', {
             init: function() {
                 this.requires('2D, Canvas');
@@ -49,6 +66,7 @@ define(function() {
 
             killPoop: function() {
                 Crafty.trigger('poop:kill');
+                Crafty.e('Splosion').attr({x: this.x, y: this.y});
                 this.destroy();
             },
 

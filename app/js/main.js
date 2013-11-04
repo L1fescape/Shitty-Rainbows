@@ -26,7 +26,7 @@ require.config({
     jquery: '../libs/jquery.min',
     backbone: '../libs/backbone-min',
     underscore: '../libs/underscore-min',
-    crafty: '../libs/crafty-min',
+    crafty: '../libs/crafty',
     tpl: '../libs/requirejs-tpl',
     filters: '../libs/backbone_filters'
   }

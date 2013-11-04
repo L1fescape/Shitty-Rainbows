@@ -7,6 +7,7 @@ define(['crafty', 'components'], function(Crafty, Components) {
             'assets/img/poop-2.png',
             'assets/img/poop-3.png',
             'assets/img/poop-4.png',
+            'assets/img/poop-splosion-64.png',
 
             'assets/img/castle.png',
             'assets/img/turret-body.png',
