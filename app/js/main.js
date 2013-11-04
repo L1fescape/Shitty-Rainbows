@@ -32,7 +32,7 @@ require.config({
   }
 });
 
-require(['backbone', 'crafty', 'jquery', 'router', 'filters'], function (Backbone, Crafty, $, Router) {
+require(['backbone', 'crafty', 'jquery', 'router'], function (Backbone, Crafty, $, Router) {
   $(document).ready(function() {
 
     // create namespaces

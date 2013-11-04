@@ -1,4 +1,4 @@
-(function() {
+define(function() {
 	_.extend(Backbone.Router.prototype, Backbone.Events, {
 		before: {},
 		after: {},
@@ -38,4 +38,4 @@
 			}, this));
 		}
 	});
-}).call(this);
+});

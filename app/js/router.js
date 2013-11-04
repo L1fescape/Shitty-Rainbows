@@ -1,5 +1,5 @@
-define(['backbone', 'views/header', 'views/game', 'models/game', 'models/level', 'scenes/loading', 'scenes/level1', 'scenes/level2'],
-function(Backbone, HeaderView, GameView, GameModel, LevelModel, loading, Level1, Level2) {
+define(['backbone', 'filters', 'views/header', 'views/game', 'models/game', 'models/level', 'scenes/loading', 'scenes/level1', 'scenes/level2'],
+function(Backbone, Filters, HeaderView, GameView, GameModel, LevelModel, loading, Level1, Level2) {
     return Backbone.Router.extend({
         loaded: false,
         level: null,
