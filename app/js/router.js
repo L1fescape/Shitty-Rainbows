@@ -1,12 +1,26 @@
-define(['backbone', 'views/header', 'views/game', 'models/game', 'scenes/loading', 'levelController'],
-function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
+define(['backbone', 'views/header', 'views/game', 'models/game', 'models/level', 'scenes/loading', 'scenes/level1', 'scenes/level2'],
+function(Backbone, HeaderView, GameView, GameModel, LevelModel, loading, Level1, Level2) {
     return Backbone.Router.extend({
         loaded: false,
+        level: null,
+
+        before: {
+            '^level' : function() {
+                // replace all non-numeric parts of the route to get the level number
+                var levelNumber = parseInt(Backbone.history.fragment.replace(/\D/g, ""))
+                if (!this.loaded) {
+                    new loading(levelNumber);
+                    return false;
+                }
+                this.level = new LevelModel({levelNumber: levelNumber});
+                return true;
+            }
+        },
 
         routes: {
             '' : 'loading',
-            'level/' : 'goToLevel',
-            'level/:levelNumber' : 'goToLevel'
+            'level/1' : 'level1',
+            'level/2' : 'level2',
         },
 
         initialize: function() {
@@ -21,39 +35,27 @@ function(Backbone, HeaderView, GameView, GameModel, loading, levelController) {
         },
 
         loading: function(levelStart) {
-            // add ability to load the game and start from a given level
-            if (levelStart) {
-                new loading(levelStart);
-            } else {
-                new loading();
-            }
+            new loading();
+        },
+
+        level1: function() {
+            new Level1({model: this.level});
+        },
+
+        level2: function() {
+            new Level2({model: this.level});
+        },
+
+        routeToLevel: function(level) {
+            level = level || 1;
+            BGJ.router.navigate('#/level/'+level, {
+                trigger: true
+            });
         },
 
         loadDone: function() {
             this.loaded = true;
         },
 
-        goToLevel: function(levelNumber) {
-            if (!this.loaded) {
-                this.loading(levelNumber);
-            } else if (!levelNumber || levelNumber > 20) {
-                this.routeToLevel(1);
-            } else {
-                new levelController(levelNumber);
-            }
-        },
-
-        routeToLoading: function() {
-            BGJ.router.navigate('#/', {
-                trigger: true
-            });
-        },
-
-        routeToLevel: function(level) {
-            level = level || "";
-            BGJ.router.navigate('#/level/'+level, {
-                trigger: true
-            });
-        }
     });
 });

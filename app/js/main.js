@@ -12,6 +12,11 @@ require.config({
       ],
       exports: 'Backbone'
     },
+    filters: {
+      deps: [
+        'backbone'
+      ]
+    },
     crafty: {
       exports: 'Crafty'
     }
@@ -22,11 +27,12 @@ require.config({
     backbone: '../libs/backbone-min',
     underscore: '../libs/underscore-min',
     crafty: '../libs/crafty-min',
-    tpl: '../libs/requirejs-tpl'
+    tpl: '../libs/requirejs-tpl',
+    filters: '../libs/backbone_filters'
   }
 });
 
-require(['backbone', 'crafty', 'jquery', 'router'], function (Backbone, Crafty, $, Router) {
+require(['backbone', 'crafty', 'jquery', 'router', 'filters'], function (Backbone, Crafty, $, Router) {
   $(document).ready(function() {
 
     // create namespaces
