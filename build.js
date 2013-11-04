@@ -17,7 +17,8 @@
     backbone: '../libs/backbone-min',
     underscore: '../libs/underscore-min',
     crafty: '../libs/crafty-min',
-    tpl: '../libs/requirejs-tpl'
+    tpl: '../libs/requirejs-tpl',
+    filters: '../libs/backbone_filters'
   },
   shim: {
     underscore: {
@@ -29,6 +30,11 @@
         'jquery'
       ],
       exports: 'Backbone'
+    },
+    filters: {
+      deps: [
+        'backbone'
+      ]
     },
     crafty: {
       exports: 'Crafty'
