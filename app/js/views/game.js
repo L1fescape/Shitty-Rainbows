@@ -1,4 +1,4 @@
-define(['backbone', 'models/game', 'tpl!templates/home.tpl'], function(Backbone, Game, tpl) {
+define(['backbone', 'models/game', 'tpl!templates/home.tpl', 'views/debug'], function(Backbone, Game, tpl, Debug) {
   return Backbone.View.extend({
     el: $("#dPage"),
 
@@ -8,6 +8,9 @@ define(['backbone', 'models/game', 'tpl!templates/home.tpl'], function(Backbone,
     initialize: function() {
       this.game = new Game();
       this.render();
+
+      // comment this out to disable debug mode
+      this.debug = new Debug();
     },
 
     render: function() {

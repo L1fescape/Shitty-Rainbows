@@ -4,6 +4,9 @@ define(['backbone', 'utils/random'], function(Backbone, random) {
         timeout: 0,
         initialize: function() {
             this.set('poops', 0);
+            this.madeAllPoops = false;
+            // trigger events
+            BGJ.dispatcher.trigger('level:start', this.get('levelNumber'));
             // bind crafty events
             Crafty.bind('poop:kill', this.killPoop.bind(this));
             // bind global events
@@ -38,7 +41,8 @@ define(['backbone', 'utils/random'], function(Backbone, random) {
 
         cleanup: function() {
             // unbind events
-            Crafty.unbind('poop:kill');
+            BGJ.dispatcher.off('level:complete', this.cleanup, this);
+            Crafty.unbind('poop:kill', this.killPoop.bind(this));
             // clear all poops
             if (Crafty('Poop').length)
                 Crafty('Poop').killPoop();

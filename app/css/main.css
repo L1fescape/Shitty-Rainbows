@@ -41,6 +41,12 @@ body {
 .body-wrapper {
   padding:20px;
   width:970px;
-  margin:70px auto;
+  margin:70px auto 0;
+}
+
+#debug {
+  padding:20px;
+  width:970px;
+  margin:0 auto;
 }
 

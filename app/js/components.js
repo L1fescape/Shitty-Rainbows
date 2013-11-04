@@ -58,6 +58,7 @@ define(function() {
 
                 this.angle = -(Math.random()*180);
 
+                Crafty.trigger('poop:create');
                 this.bind('EnterFrame', this.fall);
                 this.onHit('BaseTurret', this.killPoop);
                 this.onHit('Bullet', this.killPoop);
@@ -98,7 +99,7 @@ define(function() {
                 this.rotation = rotation - 90;
 
                 if (this.y >= targetY) {
-                    this.destroy();
+                    this.killPoop();
                 }
 
             }
@@ -208,15 +209,21 @@ define(function() {
                 this.requires('Actor, Color, Collision');
                 this.attr({z: 4, w: 16, h: 16});
                 this.origin('center');
+                Crafty.trigger('bullet:create');
                 this.bind('EnterFrame', function() {
                     this.rotation += 5;
                     this.x += this.xdir * this.bulletspeed;
                     this.y += this.ydir * this.bulletspeed;
 
                     if (this.y+this.h < 0 || this.x+this.w < 0 || this.x > this.w + game.get('width')) {
-                        this.destroy();
+                        this.killBullet();
                     }
                 });
+            },
+
+            killBullet: function() {
+              Crafty.trigger('bullet:kill');
+              this.destroy();
             }
         });
 
