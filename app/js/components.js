@@ -206,7 +206,7 @@ define(function() {
             bulletspeed: 5,
 
             init: function() {
-                this.requires('Actor, Color, Collision');
+                this.requires('Actor, Color, Collision, Persist');
                 this.attr({z: 4, w: 16, h: 16});
                 this.origin('center');
                 BGJ.dispatcher.trigger('bullet:create');
