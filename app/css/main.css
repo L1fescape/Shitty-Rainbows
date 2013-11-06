@@ -61,12 +61,50 @@ body {
   width:100%;
   height:100%;
   overflow:hidden;
-  transition: all 1s ease;
+  transition: all 0.25s ease;
+}
+
+@-moz-keyframes rainbow {
+  from {
+    background-position:top right;
+  }
+  to {
+    background-position:top left;
+  }
+}
+@-webkit-keyframes rainbow {
+  from {
+    background-position:top right;
+  }
+  to {
+    background-position:top left;
+  }
+}
+@-o-keyframes rainbow {
+  from {
+    background-position:top right;
+  }
+  to {
+    background-position:top left;
+  }
+}
+@-ms-keyframes rainbow {
+  from {
+    background-position:top right;
+  }
+  to {
+    background-position:top left;
+  }
 }
 
 .ammoBG {
   width:100%;
   height:100%;
-  background: linear-gradient(90deg, #ff0000 7%, #ff1500 14%, #ff00cc 21%, #ff00b7 28%, #8800ff 35%, #6600ff 42%, #0099ff 49%, #00ccff 56%, #00ff66 63%, #00ff00 70%, #e1ff00 77%, #ffff00 84%, #ffa200 91%, #f77f00 100%);
-  transition: all 1s ease;
+  background: linear-gradient(90deg, #ff0000 5%, #ff1500 12%, #ff00cc 19%, #ff00b7 26%, #8800ff 33%, #6600ff 40%, #0099ff 47%, #00ccff 54%, #00ff66 61%, #00ff00 68%, #e1ff00 75%, #ffff00 82%, #ffa200 89%, #f77f00 96%, #ff0000 100%);
+  -moz-animation: rainbow 2.5s forwards linear infinite;
+  -webkit-animation: rainbow 2.5s forwards linear infinite;
+  -o-animation: rainbow 2.5s forwards linear infinite;
+  -ms-animation: rainbow 2.5s forwards linear infinite;
+  animation:dayrainbow 2.5s forwards linear infinite;
+  background-size:50% auto;
 }

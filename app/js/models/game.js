@@ -12,8 +12,8 @@ define(['jquery', 'backbone'], function($, Backbone) {
     
     return Backbone.Model.extend({
         defaults: {
-            width: 700,
-            height: 500,
+            width: 800,
+            height: 600,
             bg: 'url("assets/img/starfield.png")'
         }
     });

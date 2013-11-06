@@ -172,7 +172,6 @@ define(function() {
 
                 if (this.ammo.ammoCount) {
                     this.ammo.ammoCount--;
-                    Crafty('Ammo').moveBg();
                     for (var i = 0, j = this.bulletBurst; i < j; i++) {
                         angleRadian = (rotation) * (Math.PI/180) - parseInt(j/2)*spread +i*spread;
                         ydir = Math.sin(angleRadian);
@@ -247,7 +246,6 @@ define(function() {
                 this.ammoCount = this.maxCount;
 
                 Crafty.e("Delay").delay(function() {
-                  this.backgroundPosition -= this.width/this.maxCount;
                   if (this.ammoCount < this.maxCount)
                     this.ammoCount++;
                 }.bind(this), 500, -1);
@@ -256,15 +254,8 @@ define(function() {
                   $('.ammoCrop').css({
                     'width': (this.ammoCount/this.maxCount) * this.width,
                   });
-                  $('.ammoBG').css({
-                    'background-position': this.backgroundPosition
-                  });
                 }.bind(this));
             },
-
-            moveBg: function() {
-              //this.backgroundPosition -= this.width/this.maxCount;
-            }
         });
 
         Crafty.c('Planet', {
