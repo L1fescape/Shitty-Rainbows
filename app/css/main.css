@@ -50,3 +50,23 @@ body {
   margin:0 auto;
 }
 
+
+.ammoContainer {
+  width:100%;
+  height:100%;
+  border:1px white;
+}
+
+.ammoCrop {
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  transition: all 1s ease;
+}
+
+.ammoBG {
+  width:100%;
+  height:100%;
+  background: linear-gradient(90deg, #ff0000 7%, #ff1500 14%, #ff00cc 21%, #ff00b7 28%, #8800ff 35%, #6600ff 42%, #0099ff 49%, #00ccff 56%, #00ff66 63%, #00ff00 70%, #e1ff00 77%, #ffff00 84%, #ffa200 91%, #f77f00 100%);
+  transition: all 1s ease;
+}

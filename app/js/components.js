@@ -170,13 +170,17 @@ define(function() {
 
                 var spread = this.spread;
 
-                for (var i = 0, j = this.bulletBurst; i < j; i++) {
-                    angleRadian = (rotation) * (Math.PI/180) - parseInt(j/2)*spread +i*spread;
-                    ydir = Math.sin(angleRadian);
-                    xdir = Math.cos(angleRadian);
-                    Crafty.e('Bullet')
-                        .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
-                        .color(this.colors[this.lastColor]);
+                if (this.ammo.ammoCount) {
+                    this.ammo.ammoCount--;
+                    Crafty('Ammo').moveBg();
+                    for (var i = 0, j = this.bulletBurst; i < j; i++) {
+                        angleRadian = (rotation) * (Math.PI/180) - parseInt(j/2)*spread +i*spread;
+                        ydir = Math.sin(angleRadian);
+                        xdir = Math.cos(angleRadian);
+                        Crafty.e('Bullet')
+                            .attr({x : xpos, y : ypos, xdir : xdir, ydir : ydir, rotation : rotation})
+                            .color(this.colors[this.lastColor]);
+                    }
                 }
             },
 
@@ -197,7 +201,7 @@ define(function() {
                 this.requires('BaseTurret');
                 this.bulletOrigin = "center";
                 this.rotate = false;
-                this.fireRate = 100;
+                this.fireRate = 30;
                 this.image('assets/img/turret.png');
             }
         });
@@ -227,11 +231,39 @@ define(function() {
             }
         });
 
-        Crafty.c('Crosshair', {
+        Crafty.c('Ammo', {
+            ammoCount: 0,
+            maxCount: 10,
+            rechargeInterval: 0,
+            width: game.get('width') - 20,
+            backgroundPosition: 0,
             init: function() {
-                this.requires('Actor, Color, Fourway, Collision, WiredHitBox')
-                    .attr({x: Crafty('Player').x, y: 100, z: 3, w: 15, h: 15})
-                    .color('#ffc');
+                this.ammoCount = 10;
+                this.requires('HTML')
+                    .attr({x: 10, y: game.get('height') - 10, z: 3, w: this.width, h: 5})
+                    .append("<div class='ammoContainer'><div class='ammoCrop'><div class='ammoBG'></div></div></div>");
+
+                $(".ammoBG").width(this.width);
+                this.ammoCount = this.maxCount;
+
+                Crafty.e("Delay").delay(function() {
+                  this.backgroundPosition -= this.width/this.maxCount;
+                  if (this.ammoCount < this.maxCount)
+                    this.ammoCount++;
+                }.bind(this), 500, -1);
+
+                this.bind('EnterFrame', function() {
+                  $('.ammoCrop').css({
+                    'width': (this.ammoCount/this.maxCount) * this.width,
+                  });
+                  $('.ammoBG').css({
+                    'background-position': this.backgroundPosition
+                  });
+                }.bind(this));
+            },
+
+            moveBg: function() {
+              //this.backgroundPosition -= this.width/this.maxCount;
             }
         });
 

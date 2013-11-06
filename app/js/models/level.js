@@ -14,11 +14,11 @@ define(['backbone', 'utils/random'], function(Backbone, random) {
         },
         createPoops: function(num) {
             var level = this.get('levelNumber')
-            var rate = random.get(2,4) * 1000 - level*1000;
+            var rate = random.get(2, 6 - level) * 1000;
             var movementSpeed = level;
 
             if (num > 0) {
-                this.timeout = setTimeout(function() {
+                this.timeout = Crafty.e("Delay").delay(function() {
                     Crafty.e('Poop').attr('movementSpeed', movementSpeed);
                     this.set('poops', this.get('poops') + 1);
                     this.createPoops(num-1);
@@ -50,7 +50,7 @@ define(['backbone', 'utils/random'], function(Backbone, random) {
                 Crafty('Poop').killPoop();
             this.set('poops', 0);
             // clear timeout for making poops
-            clearTimeout(this.timeout);
+            this.timeout.destroy();
         }
     });
 });
