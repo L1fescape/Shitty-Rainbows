@@ -7568,11 +7568,17 @@ Crafty.c("Image", {
 
 				var context = e.ctx;
 				
-				context.fillStyle = this._pattern;
-				
+
 				context.save();
 				context.translate(e.pos._x, e.pos._y);
-				context.fillRect(0, 0, this._w, this._h);
+
+                if (this.scaleImage) {
+                    context.drawImage(this.img,0,0, this.imgScaleW, this.imgScaleH);
+                } else {
+                    context.fillStyle = this._pattern;
+                    context.fillRect(0, 0, this._w, this._h);
+                }
+
 				context.restore();
 			} else if (e.type === "DOM") {
 				if (this.__image)

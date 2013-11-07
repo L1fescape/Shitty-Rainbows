@@ -14,7 +14,7 @@ define(['backbone', 'utils/random'], function(Backbone, random) {
         },
         createPoops: function(num) {
             var level = this.get('levelNumber')
-            var rate = random.get(2, 6 - level) * 1000;
+            var rate = random.float(2, 6 - level) * 1000;
             var movementSpeed = level;
 
             if (num > 0) {

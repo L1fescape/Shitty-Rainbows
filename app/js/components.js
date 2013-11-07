@@ -25,16 +25,93 @@ define(function() {
             }
         });
 
+        Crafty.c('Buzz', {
+            buzzLastAngle: 0,
+            buzzHoverIncrement: 2,
+            buzzHoverRadius: .9,
+            buzzOriginX: null,
+            buzzRadius: 3,
+            init: function() {
+                this.bind('EnterFrame', this.buzz)
+            },
+
+            buzz: function() {
+                this.y -= Math.cos(this.buzzLastAngle * this.buzzRadius * Math.PI / 180.0) * this.buzzHoverRadius;
+                this.x -= Math.sin(this.buzzLastAngle * Math.PI / 180.0) * this.buzzHoverRadius;
+                this.buzzLastAngle += this.buzzHoverIncrement;
+
+                if (!this.buzzOriginX) {
+                    this.buzzOriginX = this.x;
+                }
+            }
+        });
+
+        Crafty.c('Traj', {
+            trajLastAngle: 0,
+            trajHoverIncrement: 2,
+            trajHoverRadius: .9,
+            trajOriginX: null,
+            trajSpeed: 1.5,
+            gravitySpeed: 2,
+            maxYSpeed: 0,
+            reachedMax: false,
+            init: function() {
+                this.scaleImage = true;
+                this.imgScaleW = this.w;
+                this.imgScaleH = this.h;
+                this.bind('EnterFrame', this.traj)
+            },
+
+            traj: function() {
+
+                this.imgScaleW++;
+                this.imgScaleH++;
+                this.w++;
+                this.h++;
+
+                this.collision([0,0], [0, this.w], [this.h, this.w], [this.h, 0]);
+
+                if (!this.lastY) {
+                    this.lastY = this.y;
+                }
+
+                if (!this.trajOriginX) {
+                    this.trajOriginX = this.x;
+                }
+
+                var ySpeedDelta = this.y - this.lastY;
+                var speedDelta = Math.cos(this.trajLastAngle * Math.PI / 180.0) * this.trajHoverRadius * this.trajSpeed;
+
+                if (this.trajLastAngle > 180) {
+
+                    if (this.maxYSpeed <= ySpeedDelta) {
+                        this.maxYSpeed = ySpeedDelta;
+                    } else {
+                        this.reachedMax = true;
+                    }
+
+                    if (this.reachedMax) {
+                        console.log(this.maxYSpeed);
+                        this.y -= this.maxYSpeed;
+                    } else {
+                        this.y -= speedDelta;
+                    }
+
+                } else {
+                    this.trajLastAngle += this.trajHoverIncrement;
+                    this.lastY = this.y;
+                    this.y -= speedDelta;
+                }
+
+            }
+        });
+
         Crafty.c('Poop', {
             w: 32,
             h: 32,
             movementSpeed: 5,
             init: function() {
-                this.requires('Actor, Image, Collision');
-                this.attr({
-                    x: Math.random()*game.get('width'),
-                    y: -(Math.random()*game.get('height')/10)
-                });
+                this.requires('Actor, Image, Traj, Collision');
 
                 var image;
 
@@ -55,6 +132,7 @@ define(function() {
                 }
 
                 this.image(image);
+                this.attr({x: Crafty('Monkeys').x + Math.random()*Crafty('Monkeys').w, y: Crafty('Monkeys').y, w: 32, h: 32});
 
                 this.angle = -(Math.random()*180);
 
@@ -72,7 +150,6 @@ define(function() {
             },
 
             fall: function() {
-
                 var thisX = this.x + this.w/2;
                 var thisY = this.y + this.h/2;
 
@@ -91,11 +168,9 @@ define(function() {
 
                 var rotation = angleRadian * 180 / Math.PI;
 
-                var ydir = Math.sin(angleRadian);
                 var xdir = Math.cos(angleRadian);
 
                 this.x += xdir * this.movementSpeed;
-                this.y += ydir * this.movementSpeed;
                 this.rotation = rotation - 90;
 
                 if (this.y >= targetY) {
@@ -262,7 +337,7 @@ define(function() {
             collisionOffset: 50,
             init: function() {
 
-                this.requires('2D, Canvas, Image')
+                this.requires('Actor, Image')
                     .image('assets/img/planet.png');
 
                 var centerX = game.get('width')/2;
