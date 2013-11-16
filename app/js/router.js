@@ -35,6 +35,7 @@ function(Backbone, Filters, HeaderView, GameView, GameModel, LevelModel, loading
         },
 
         loading: function(levelStart) {
+          console.log("loading");
             new loading();
         },
 

@@ -7,20 +7,22 @@ define(function() {
 				return true;
 			}
 			return _.find(filters, function(func, filterRoute) {
-        filterRoute = new RegExp(filterRoute);
+				filterRoute = new RegExp(filterRoute);
 				if (filterRoute.test(fragment)) {
 					return (_.isFunction(func) ? func.apply(this, args) : this[func].apply(this, args));
 				}
-				return false;
+				return true;
 			}, this);
 		},
 		route: function(route, name, callback) {
-			if (!_.isRegExp(route)) route = this._routeToRegExp(route);
+			if (!_.isRegExp(route)) 
+				route = this._routeToRegExp(route);
 			if (_.isFunction(name)) {
 				callback = name;
 				name = '';
 			}
-			if (!callback) callback = this[name];
+			if (!callback) 
+				callback = this[name];
 			Backbone.history.route(route, _.bind(function(fragment) {
 				var args = this._extractParameters(route, fragment);
 				if (this._runFilters(this.before, fragment, args)) {
